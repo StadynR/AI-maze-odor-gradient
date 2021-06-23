@@ -8,9 +8,9 @@
 # DONE
  - [X] Implementación de la matriz de olor (En clase) 
  - [X] Viaje del olor a partir de una función exponencial (En clase)      
- - [X] Implementación de la matriz de calor (En clase)
+ - [X] <s>Implementación de la matriz de calor (En clase)</s>
  
-      - Si el DFS es una solución válida, podríamos omitir la matriz de calor
+      - El uso del DFS es una solución válida y óptima, y permite omitir la matriz de calor :D
  - [X] Implementación de DFS (Stadyn)
  - [X] Algoritmo de explotación mejorado con DFS (Stadyn)
  - [X] <s>Algoritmo de escape de trampa de gradientes (Stadyn)</s>
