@@ -1,8 +1,9 @@
 # TODO
- - [ ] Implementar comportamiento markoviano para el agente (Sam)
+ - [ ] Implementar comportamiento markoviano para el agente (Samantha)
  - [ ] <s>Mejorar el gradiente de olor para que tenga más sentido acorde a la realidad física (?)</s>
        
       - Innecesario, la función exponencial es suficiente aparentemente.
+ - [X] Generación de laberintos válidos (Arianna)
 
 # DONE
  - [X] Implementación de la matriz de olor (En clase) 
@@ -16,4 +17,6 @@
  - [X] <s>Mejorar el método de escape de trampa de gradientes (Stadyn)</s>
  
       - Ya no es necesario un escape de gradientes, el DFS es mucho mejor y evita que siquiera haya trampas de gradiente. 
+ - [X] Interfaz Gráfica (Washington)
+ - [X] Generador inicial de laberintos (Washington)
 
