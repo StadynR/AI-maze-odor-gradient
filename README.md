@@ -13,6 +13,6 @@ Project for the Artificial Intelligence course in Yachay Tech University.
  
  ## The Odor Matrix
  
- ## The "Heat" Matrix
+ ## Depth First Search
  
  ## How the Agent solves the maze
