@@ -25,7 +25,7 @@ int x_agent, y_agent;
 int x_plot_maze=30;
 int y_plot_maze=30;
 
-int square_size=50;        //
+int square_size=50-33;        //
 int captured_color;
 
 
@@ -33,8 +33,8 @@ int captured_color;
 const float gamma = 0.8;
 
 int R[files][columns];
-
-int Q[files][columns];    //
+int S[files][columns];    //
+int C[files][columns];    //
 
 int screen_image[files][columns];   //   presence  in pixels of the agent  and environment in the screen. Alter_ego  
 
@@ -53,6 +53,15 @@ int sensor[4];
 int MAX;
 int grad_pointer;
 
+int path[500][2];
+int visited[500][2];
+int unvisited[4][2];
+int cont;
+int stcont;
+int mov;
+bool no_unvisited = false;
+
+int aux_x, aux_y;
 int player_captured_color;
 
 //----------------------------------------)))
@@ -71,7 +80,7 @@ int player_captured_color;
 
 
 #include "plot_maze_items.h"
-// #include "Q_structures_lib.h"
+#include "Q_structures_lib.h"
 #include "all_possible_mazes.h"        
 
 
@@ -165,6 +174,14 @@ void loop(void)  //                                                           lo
 
     plot_maze();
     plot_agent();
+    print_R();
+    print_S();   //  gradiente de olor
+    print_C();   //  matriz de calor
+    
+    cout <<" ready to exploit-- " <<endl; 
+     
+    getch();        
+    Q_exploit();
   
 }   
 //------------------------------------------------------
@@ -186,6 +203,7 @@ void main(void)
     Start_Message();       // Messegae of welcome
 
     init_R();                  //We get a random MAZE
+    init_S();
 
 
     x_agent=x_plot_maze;   //  x_agent:  coordinate x of agent in the screen    
@@ -230,10 +248,14 @@ void main(void)
                               
             case 'R': case 'r':  {
                                    init_R();
+                                   init_S();
                                    loop();
                                  }
             break;                     
-                                  
+            
+            default:
+                init_S();
+                loop();
          }
    } while ((key!='x')&&(key!='X'));
 
