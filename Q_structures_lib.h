@@ -7,7 +7,7 @@ void print_R(void)
  int i,j;
     
     printf("This is the R Matrix:\n \n");
-    for(i = 0; i < rows; i++)
+    for(i = 0; i < files; i++)
         {
         for(j = 0; j < columns; j++)
             {
@@ -23,7 +23,7 @@ void print_S(void)
  int i,j;
     
     printf("This is the S Matrix:\n \n");
-    for(i = 0; i < rows; i++)
+    for(i = 0; i < files; i++)
         {
         for(j = 0; j < columns; j++)
             {
@@ -39,12 +39,18 @@ void init_S(void)
  float lambda=10;    //  costante de decaimiento con la distancia
  //float N=1.0;         //   N : scent concentration in a given square
  float step=0.01;     // cuanto se avanza en cada loop  
- int i,j,k;
+ int k, distx, disty;
  
-   for (i=0; i < rows; i++)
-   for (j=0; j < columns; j++)
+   for (int i=0; i < files; i++)
+   for (int j=0; j < columns; j++)
+    S[i][j]=0;
+    
+   for (int i=0; i < files; i++)
+   for (int j=0; j < columns; j++)
     {
-     k = sqrt(i*i+j*j);   // distancia pitagoras a coordenadas (0,0)
+     disty = i-aux_x;
+     distx = j-aux_y;
+     k = sqrt(distx*distx+disty*disty);   // distancia pitagoras a coordenadas (0,0)
      if(R[i][j]!=-1) S[i][j]=100* exp(-lambda*step*k);  // concentracion % a esa distancia
     }   
     //   se consulta a la matriz R por lo tanto el gradiente sigue la ley de las paredes
@@ -55,7 +61,7 @@ void print_C(void)
  int i,j;
     
     printf("This is the C Matrix:\n \n");
-    for(i = 0; i < rows; i++)
+    for(i = 0; i < files; i++)
         {
         for(j = 0; j < columns; j++)
             {
@@ -69,7 +75,7 @@ void print_C(void)
 void init_C(void)
 {
    int i,j;
-   for (i=0; i < rows; i++)
+   for (i=0; i < files; i++)
     for (j=0; j < columns; j++)
          C[i][j]=0; 
 }
@@ -116,24 +122,24 @@ void move_left(void)
 {
  int temp;
     temp=getpixel(x_agent-square_size,y_agent);   // revisa cercania a la izquierda
-    if(temp==4||temp==14||temp==12) // movimiento válido
+    if(temp==7||temp==14||temp==12) // movimiento válido
     {  
      x_agent=x_agent-square_size;
      column_agent--;
     }    
-   C[row_agent][column_agent]++;
+   C[file_agent][column_agent]++;
 }
 //--------------------------------------------------------------
 void move_right(void)
 {
  int temp;   
   temp=getpixel(x_agent+square_size,y_agent);   // revisa cercania a la derecha
-  if(temp==4||temp==14||temp==12)
+  if(temp==7||temp==14||temp==12)
      {
       x_agent=x_agent+square_size;
       column_agent++; 
      }  
-  C[row_agent][column_agent]++;
+  C[file_agent][column_agent]++;
     
 }
 //-------------------------------------------------------------
@@ -141,12 +147,12 @@ void move_up(void)
 {
  int temp;
     temp=getpixel(x_agent,y_agent-square_size);   // revisa cercania arriba
-    if(temp==4||temp==14||temp==12)
+    if(temp==7||temp==14||temp==12)
     {
      y_agent=y_agent-square_size;
-     row_agent--;
+     file_agent--;
     }
- C[row_agent][column_agent]++;    
+ C[file_agent][column_agent]++;    
   
 }
 //-------------------------------------------------------------
@@ -154,27 +160,27 @@ void move_down(void)
 {
  int temp;
    temp=getpixel(x_agent,y_agent+square_size);    // revisa cercania abajo
-   if(temp==4||temp==14||temp==12)
+   if(temp==7||temp==14||temp==12)
    {
     y_agent=y_agent+square_size; 
-    row_agent++;
+    file_agent++;
    } 
-  C[row_agent][column_agent]++;   
+  C[file_agent][column_agent]++;   
 }
 //--------------------------------------------------------
 void search_for_MAX(void) 
 {
-    sensor[0]= S[row_agent][column_agent-1];    // lee  a izquierda
+    sensor[0]= S[file_agent][column_agent-1];    // lee  a izquierda
     if(column_agent==0) sensor[0]=-1;           // desborde a la izquierda 
         
-    sensor[1]= S[row_agent][column_agent+1];    // lee a derecha
+    sensor[1]= S[file_agent][column_agent+1];    // lee a derecha
     if(column_agent==columns-1) sensor[1]=-1;
     
-    sensor[2]= S[row_agent-1][column_agent];    // lee arriba
-    if(row_agent==0) sensor[2]=-1;
+    sensor[2]= S[file_agent-1][column_agent];    // lee arriba
+    if(file_agent==0) sensor[2]=-1;
     
-    sensor[3]= S[row_agent+1][column_agent];    // lee abjo
-    if(row_agent==rows-1) sensor[3]=-1;
+    sensor[3]= S[file_agent+1][column_agent];    // lee abjo
+    if(file_agent==files-1) sensor[3]=-1;
 
     MAX=sensor[0];
     for(int i = 0; i < 4; i++) if(sensor[i] >= MAX) { MAX=sensor[i];grad_pointer=i; }  // grad_pointer apunta al maximo valor
@@ -213,40 +219,40 @@ void get_unvisited_neighbors()
     no_unvisited = true;
     int temp;
     
-    //cout << "row: " << row_agent << " col: " << column_agent << endl;
+    //cout << "row: " << file_agent << " col: " << column_agent << endl;
     
-    temp = R[row_agent][column_agent-1];
+    temp = R[file_agent][column_agent-1];
     if(column_agent == 0) temp = -1;
-    if(temp != -1 && not_visited(row_agent, column_agent-1)){
+    if(temp != -1 && not_visited(file_agent, column_agent-1)){
         //cout << "R left: " << temp << endl;
-        unvisited[0][0] = row_agent; 
+        unvisited[0][0] = file_agent; 
         unvisited[0][1] = column_agent-1; 
         no_unvisited = false;
     }
     
-    temp = R[row_agent][column_agent+1];
+    temp = R[file_agent][column_agent+1];
     if(column_agent == columns-1) temp = -1;
-    if(temp != -1 && not_visited(row_agent, column_agent+1)){ 
+    if(temp != -1 && not_visited(file_agent, column_agent+1)){ 
         //cout << "R right: " << temp << endl;
-        unvisited[1][0] = row_agent; 
+        unvisited[1][0] = file_agent; 
         unvisited[1][1] = column_agent+1; 
         no_unvisited = false;
     }
     
-    temp = R[row_agent-1][column_agent];
-    if(row_agent == 0) temp = -1;
-    if(temp != -1 && not_visited(row_agent-1, column_agent)){ 
+    temp = R[file_agent-1][column_agent];
+    if(file_agent == 0) temp = -1;
+    if(temp != -1 && not_visited(file_agent-1, column_agent)){ 
         //cout << "R up: " << temp << endl;
-        unvisited[2][0] = row_agent-1; 
+        unvisited[2][0] = file_agent-1; 
         unvisited[2][1] = column_agent;
         no_unvisited = false;
     }
     
-    temp = R[row_agent+1][column_agent];
-    if(row_agent == rows-1) temp = -1;
-    if(temp != -1 && not_visited(row_agent+1, column_agent)){ 
+    temp = R[file_agent+1][column_agent];
+    if(file_agent == files-1) temp = -1;
+    if(temp != -1 && not_visited(file_agent+1, column_agent)){ 
         //cout << "R down: " << temp << endl;
-        unvisited[3][0] = row_agent+1; 
+        unvisited[3][0] = file_agent+1; 
         unvisited[3][1] = column_agent; 
         no_unvisited = false;
     }
@@ -257,35 +263,35 @@ void backtrack()
 { 
     int temp;
     
-    //cout << "brow: " << row_agent << " bcol: " << column_agent << endl;
+    //cout << "bfile: " << file_agent << " bcol: " << column_agent << endl;
     
-    temp = R[row_agent][column_agent-1];
+    temp = R[file_agent][column_agent-1];
     if(column_agent == 0) temp = -1;
-    if(temp != -1 && row_agent == path[stcont][0] && column_agent-1 == path[stcont][1]){
+    if(temp != -1 && file_agent == path[stcont][0] && column_agent-1 == path[stcont][1]){
         //cout << "Backtrack left: " << temp << endl;
         mov = 0;
         return;
     }
     
-    temp = R[row_agent][column_agent+1];
+    temp = R[file_agent][column_agent+1];
     if(column_agent == columns-1) temp = -1;
-    if(temp != -1 && row_agent == path[stcont][0] && column_agent+1 == path[stcont][1]){ 
+    if(temp != -1 && file_agent == path[stcont][0] && column_agent+1 == path[stcont][1]){ 
         //cout << "Backtrack right: " << temp << endl;
         mov = 1;
         return;
     }
     
-    temp = R[row_agent-1][column_agent];
-    if(row_agent == 0) temp = -1;
-    if(temp != -1 && row_agent-1 == path[stcont][0] && column_agent == path[stcont][1]){ 
+    temp = R[file_agent-1][column_agent];
+    if(file_agent == 0) temp = -1;
+    if(temp != -1 && file_agent-1 == path[stcont][0] && column_agent == path[stcont][1]){ 
         //cout << "Backtrack up: " << temp << endl;
         mov = 2;
         return;
     }
     
-    temp = R[row_agent+1][column_agent];
-    if(row_agent == rows-1) temp = -1;
-    if(temp != -1 && row_agent+1 == path[stcont][0] && column_agent == path[stcont][1]){ 
+    temp = R[file_agent+1][column_agent];
+    if(file_agent == files-1) temp = -1;
+    if(temp != -1 && file_agent+1 == path[stcont][0] && column_agent == path[stcont][1]){ 
         //cout << "Backtrack down: " << temp << endl;
         mov = 3;
         return;
@@ -298,7 +304,7 @@ void DFS(){
          unvisited[i][0] = -1;
          unvisited[i][1] = -1;
      }
-     //cout << "Stack pos: " << stcont << " , row: " << row_agent << " , col: " << column_agent << endl;
+     //cout << "Stack pos: " << stcont << " , row: " << file_agent << " , col: " << column_agent << endl;
      //print_visited();
      get_unvisited_neighbors();
      //print_unvisited();
@@ -339,13 +345,13 @@ void Q_exploit(void)
         int rep=0;  //número de pasos que da el agente
          do
          {
-          i=random(rows);
+          i=random(files);
           j=random(columns); 
           temp=R[i][j];             
          } while(temp==-1);    // el agente se ubica en estado inicial aleatorio con entrada diferente de -1   
  
-         row_agent = i;
-         column_agent = j;  
+         file_agent = 0;
+         column_agent = 0;  
          plot_maze();
          plot_agent();
          
@@ -354,9 +360,9 @@ void Q_exploit(void)
          cont = 0;
          stcont = 0;
            
-         path[stcont][0] = row_agent;
+         path[stcont][0] = file_agent;
          path[stcont][1] = column_agent;
-         visited[cont][0] = row_agent;
+         visited[cont][0] = file_agent;
          visited[cont][1] = column_agent;
                   
          do
@@ -364,7 +370,7 @@ void Q_exploit(void)
            
            DFS();
 
-           /*if(C[row_agent][column_agent] > 15){ //si ha pasado mucho por la misma casilla
+           /*if(C[file_agent][column_agent] > 15){ //si ha pasado mucho por la misma casilla
                int cont = 0;
                do{
                    k = random(4);

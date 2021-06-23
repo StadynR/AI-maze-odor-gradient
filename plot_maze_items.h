@@ -9,7 +9,7 @@ int temp;
     
 x= x_plot_maze;
 y= y_plot_maze;   
-scale=square_size-33;
+scale=square_size;
    
    for(i=0;i<files;i++)  // 
      { 
@@ -23,7 +23,7 @@ scale=square_size-33;
           //timp= Entrada[counter];  
           color=LIGHTGRAY; 
           if(temp<0) color=BLACK;          // WALL
-          if(temp==0) color=GREEN;          // FLOOR    
+          if(temp==0) color=LIGHTGRAY;          // FLOOR    
           if(temp==100) color=YELLOW;     // TOP REWARD
           setcolor(color); 
           setfillstyle(SOLID_FILL,color); 
@@ -38,7 +38,7 @@ scale=square_size-33;
 //----------------------------------------------------------------------------------------
 void plot_agent(void)
 {
-int color,agent_size=square_size-36;  
+int color,agent_size=square_size-3;  
 int x,y;    
     
 int offset_x=5;   //   para centrar al agente en x
