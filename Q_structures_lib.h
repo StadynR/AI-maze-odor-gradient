@@ -2,22 +2,6 @@
 //  DEFINICION DE ESTRUCTURAS Q 
 //========================================================================
 //----------------------------------------------------------------------------------------------------     
-void print_Q(void)
-{
- int i,j;
-    
-    printf("This is the Q Matrix:\n \n");
-    for(i = 0; i < rows; i++)
-        {
-        for(j = 0; j < columns; j++)
-            {
-            cout << setw(5) << Q[i][j];   
-		}
-        cout << "\n";
-	} 
-    cout << "\n";
-}
-//-------------------------------------------------------------------------------------------
 void print_R(void)
 {
  int i,j;
@@ -89,7 +73,6 @@ void init_C(void)
     for (j=0; j < columns; j++)
          C[i][j]=0; 
 }
-//-------------------------------------------------------------
 //------------------------------------------------------------
 void print_visited(){
     cout << "Visited: ";
@@ -133,7 +116,7 @@ void move_left(void)
 {
  int temp;
     temp=getpixel(x_agent-square_size,y_agent);   // revisa cercania a la izquierda
-    if(temp==4||temp==14||temp==12) // movimiento válido
+    if(temp==4||temp==14||temp==12) // movimiento vÃ¡lido
     {  
      x_agent=x_agent-square_size;
      column_agent--;
@@ -353,7 +336,7 @@ void Q_exploit(void)
    do
     {
         init_C();
-        int rep=0;  //número de pasos que da el agente
+        int rep=0;  //nÃºmero de pasos que da el agente
          do
          {
           i=random(rows);
