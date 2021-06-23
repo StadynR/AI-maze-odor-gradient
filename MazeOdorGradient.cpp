@@ -5,14 +5,13 @@ Group Project of Artificial Intelligence
 July 22 2021
 /*********************************************************************/ 
 //
-//  Students name:  Stadyn, Samantha, Arianna Washington
+//  Students name:  Stadyn Román, Samantha Quintachala, Arianna Armijos, Washington Pijal
 //
 //------------------------------------------------------------------------------------------------
 // GLOBALS
-
    
 #define  files 45
-#define  columns 75     //       size of the graphic maze   
+#define  columns 75    //       size of the graphic maze   
 
 int b_flag;
 int stop;
@@ -34,7 +33,6 @@ const float gamma = 0.8;
 
 int R[files][columns];
 int S[files][columns];    //
-int C[files][columns];    //
 
 int screen_image[files][columns];   //   presence  in pixels of the agent  and environment in the screen. Alter_ego  
 
@@ -76,7 +74,6 @@ int player_captured_color;
 #include <iostream>
 #include <iomanip.h>
 #include <windows.h>
-
 
 
 #include "plot_maze_items.h"
@@ -139,7 +136,7 @@ void loadingBar()
 
     system("cls");
 
-    printf("\t\t Maze Gradiend Odor\n");
+    printf("\t\t Maze Gradient Odor\n");
 
 
 }
@@ -149,7 +146,7 @@ void Start_Message(void){
   moveto(0,250); 
   settextstyle(4,0,4); 
   setcolor(GREEN);
-  outtext("Welcome to the Maze Gradiend Program ");
+  outtext("Welcome to the Maze Gradient Program ");
 
 
   moveto(0,300); 
@@ -164,7 +161,7 @@ void Start_Message(void){
   moveto(600,0); 
   settextstyle(9,0,2); 
   setcolor(WHITE);
-  outtext(" Maze Gradiend Program  ");
+  outtext(" Maze Gradient Program  ");
 
 } 
 
@@ -176,7 +173,6 @@ void loop(void)  //                                                           lo
     plot_agent();
     print_R();
     print_S();   //  gradiente de olor
-    print_C();   //  matriz de calor
     
     cout <<" ready to exploit-- " <<endl; 
      
@@ -195,7 +191,9 @@ void main(void)
     setcolor(LIGHTGRAY);
     bar(0,0,2400,900);  
 
-    srand(rand_seed);   
+    srand(rand_seed);  
+
+    randomize();
 
     file_agent=0;               
     column_agent=0;             
@@ -211,12 +209,6 @@ void main(void)
 
     plot_maze();
     plot_agent();
-
-    //print_R();
-
-    //load_Q();    // carga el conocimiento Policy
-    //print_Q();
-    //getch();
 
     stop=0;
 
@@ -254,7 +246,6 @@ void main(void)
             break;                     
             
             default:
-                init_S();
                 loop();
          }
    } while ((key!='x')&&(key!='X'));

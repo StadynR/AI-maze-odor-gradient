@@ -56,30 +56,6 @@ void init_S(void)
     //   se consulta a la matriz R por lo tanto el gradiente sigue la ley de las paredes
 }
 //-------------------------------------------------------------
-void print_C(void)
-{
- int i,j;
-    
-    printf("This is the C Matrix:\n \n");
-    for(i = 0; i < files; i++)
-        {
-        for(j = 0; j < columns; j++)
-            {
-            cout << setw(5) << C[i][j];   
-		}
-        cout << "\n";
-	} 
-    cout << "\n";
-}
-//-----------------------------------------------------
-void init_C(void)
-{
-   int i,j;
-   for (i=0; i < files; i++)
-    for (j=0; j < columns; j++)
-         C[i][j]=0; 
-}
-//------------------------------------------------------------
 void print_visited(){
     cout << "Visited: ";
     for(int i = 0; i <= cont; i++){
@@ -127,7 +103,6 @@ void move_left(void)
      x_agent=x_agent-square_size;
      column_agent--;
     }    
-   C[file_agent][column_agent]++;
 }
 //--------------------------------------------------------------
 void move_right(void)
@@ -139,8 +114,6 @@ void move_right(void)
       x_agent=x_agent+square_size;
       column_agent++; 
      }  
-  C[file_agent][column_agent]++;
-    
 }
 //-------------------------------------------------------------
 void move_up(void)
@@ -151,9 +124,7 @@ void move_up(void)
     {
      y_agent=y_agent-square_size;
      file_agent--;
-    }
- C[file_agent][column_agent]++;    
-  
+    }  
 }
 //-------------------------------------------------------------
 void move_down(void)
@@ -164,28 +135,9 @@ void move_down(void)
    {
     y_agent=y_agent+square_size; 
     file_agent++;
-   } 
-  C[file_agent][column_agent]++;   
+   }   
 }
 //--------------------------------------------------------
-void search_for_MAX(void) 
-{
-    sensor[0]= S[file_agent][column_agent-1];    // lee  a izquierda
-    if(column_agent==0) sensor[0]=-1;           // desborde a la izquierda 
-        
-    sensor[1]= S[file_agent][column_agent+1];    // lee a derecha
-    if(column_agent==columns-1) sensor[1]=-1;
-    
-    sensor[2]= S[file_agent-1][column_agent];    // lee arriba
-    if(file_agent==0) sensor[2]=-1;
-    
-    sensor[3]= S[file_agent+1][column_agent];    // lee abjo
-    if(file_agent==files-1) sensor[3]=-1;
-
-    MAX=sensor[0];
-    for(int i = 0; i < 4; i++) if(sensor[i] >= MAX) { MAX=sensor[i];grad_pointer=i; }  // grad_pointer apunta al maximo valor
-}
-//-------------------------------------------------------------
 void search_for_MAX_unvisited(void) 
 {
     int row, col;
@@ -341,7 +293,7 @@ void Q_exploit(void)
  randomize(); 
    do
     {
-        init_C();
+        
         int rep=0;  //número de pasos que da el agente
          do
          {
@@ -350,8 +302,8 @@ void Q_exploit(void)
           temp=R[i][j];             
          } while(temp==-1);    // el agente se ubica en estado inicial aleatorio con entrada diferente de -1   
  
-         file_agent = 0;
-         column_agent = 0;  
+         file_agent = i;
+         column_agent = j;  
          plot_maze();
          plot_agent();
          
@@ -369,18 +321,7 @@ void Q_exploit(void)
           { 
            
            DFS();
-
-           /*if(C[file_agent][column_agent] > 15){ //si ha pasado mucho por la misma casilla
-               int cont = 0;
-               do{
-                   k = random(4);
-                   if(k==0) move_left();
-                   if(k==1) move_right(); 
-                   if(k==2) move_up();
-                   if(k==3) move_down();
-                   cont++;
-                }while(cont < 10);
-            }*/
+              
            if(mov==0) move_left();
            if(mov==1) move_right(); 
            if(mov==2) move_up();
@@ -390,11 +331,10 @@ void Q_exploit(void)
            plot_agent();                     //  sensor captures color
            delay(31);
            rep++;
-         }while(captured_color!=YELLOW && rep < 200);     //hasta que capture recompensa maxima o haya tardado mucho
+         }while(captured_color!=YELLOW && rep < 1000);     //hasta que capture recompensa maxima o haya tardado mucho
 
         print_visited();
-        print_S(); 
-        print_C(); 
+        print_S();  
         delay(1000);
         //getch();
     }while(1);      
