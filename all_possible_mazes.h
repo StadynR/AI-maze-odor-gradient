@@ -32,7 +32,6 @@ void maze_3(void){
 //-------------------------------------------------------
  
 void random_chees(void){
-    int aux_x, aux_y;
     do{
         aux_x = random(files);
         aux_y = random(columns);
