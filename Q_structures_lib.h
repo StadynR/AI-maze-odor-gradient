@@ -219,8 +219,6 @@ void backtrack()
     
     stcont--;
     cont++;
-    visited[cont][0] = path[stcont][0];
-    visited[cont][1] = path[stcont][1];
     
     //cout << "bfile: " << file_agent << " bcol: " << column_agent << endl;
     
@@ -279,8 +277,6 @@ void DFS(){
          mov = grad_pointer;          // el agente se mueve a un nuevo estado
          path[stcont][0] = unvisited[mov][0];
          path[stcont][1] = unvisited[mov][1];
-         visited[cont][0] = unvisited[mov][0];
-         visited[cont][1] = unvisited[mov][1];
              
          //plot_trail();
          }
@@ -328,7 +324,10 @@ void Q_exploit(void)
            if(mov==1) move_right(); 
            if(mov==2) move_up();
            if(mov==3) move_down(); 
-              
+           
+           visited[cont][0] = file_agent;
+           visited[cont][1] = column_agent;
+           
            plot_maze();
            plot_agent();                     //  sensor captures color
            delay(31);
