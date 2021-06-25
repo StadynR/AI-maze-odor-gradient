@@ -217,9 +217,6 @@ void backtrack()
 { 
     int temp;
     
-    stcont--;
-    cont++;
-    
     //cout << "bfile: " << file_agent << " bcol: " << column_agent << endl;
     
     temp = R[file_agent][column_agent-1];
@@ -266,6 +263,8 @@ void DFS(){
      get_unvisited_neighbors();
      //print_unvisited();
      if(no_unvisited){
+         stcont--;
+         cont++;
          
          backtrack();
          //plot_trail();
