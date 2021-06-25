@@ -207,8 +207,10 @@ bool not_visited(int row, int col)
     bool f = true;
     
     for(int i = 0; i < cont; i++){
-        if(visited[i][0] == row && visited[i][1] == col)
-            f = false;
+        if(visited[i][0] == row && visited[i][1] == col){
+            f = false; 
+            break;
+        }
     }
     
     return f;
@@ -263,6 +265,11 @@ void backtrack()
 { 
     int temp;
     
+    stcont--;
+    cont++;
+    visited[cont][0] = path[stcont][0];
+    visited[cont][1] = path[stcont][1];
+    
     //cout << "bfile: " << file_agent << " bcol: " << column_agent << endl;
     
     temp = R[file_agent][column_agent-1];
@@ -309,13 +316,8 @@ void DFS(){
      get_unvisited_neighbors();
      //print_unvisited();
      if(no_unvisited){
-         stcont--;
-         cont++;
-         visited[cont][0] = path[stcont][0];
-         visited[cont][1] = path[stcont][1];
          
          backtrack();
-         
          //plot_trail();
      }
      else{
