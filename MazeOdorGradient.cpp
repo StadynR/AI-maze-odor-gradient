@@ -241,7 +241,9 @@ void main(void)
             case 'R': case 'r':  {
                                    init_R();
                                    init_S();
-                                   loop();
+                                   random_agent();
+                                   plot_maze();
+                                   plot_agent();
                                  }
             break;                     
             
