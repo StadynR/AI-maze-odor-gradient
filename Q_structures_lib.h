@@ -66,7 +66,7 @@ void print_visited(){
 //------------------------------------------------------------
 void print_path(){
     cout << "Path: ";
-    for(int i = 0; i <= cont; i++){
+    for(int i = 0; i <= stcont; i++){
         cout << "[" << path[i][0] << ", " << path[i][1] << "] ";
     }
     cout << endl;
@@ -346,6 +346,7 @@ void Q_exploit(void)
          }while(captured_color!=YELLOW);     //hasta que capture recompensa maxima o haya tardado mucho
 
         print_visited();
+        print_path();
         print_S();  
         delay(1000);
         random_agent();

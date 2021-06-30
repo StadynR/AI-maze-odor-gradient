@@ -51,8 +51,8 @@ int sensor[4];
 int MAX;
 int grad_pointer;
 
-int path[500][2];
-int visited[500][2];
+int path[files*columns*3][2];
+int visited[files*columns][2];
 int unvisited[4][2];
 int cont;
 int stcont;
