@@ -10,8 +10,8 @@ July 22 2021
 //------------------------------------------------------------------------------------------------
 // GLOBALS
    
-#define  files 45
-#define  columns 75    //       size of the graphic maze   
+#define  files 28
+#define  columns 70    //       size of the graphic maze   
 
 int b_flag;
 int stop;
@@ -51,8 +51,8 @@ int sensor[4];
 int MAX;
 int grad_pointer;
 
-int path[500][2];
-int visited[500][2];
+int path[files*columns*3][2];
+int visited[files*columns][2];
 int unvisited[4][2];
 int cont;
 int stcont;
@@ -164,7 +164,6 @@ void Start_Message(void){
   outtext(" Maze Gradient Program  ");
 
 } 
-
 //-------------------------------------------------------------
 void loop(void)  //                                                           loop  !!                        &&&/&&/&&/////
 {
@@ -176,7 +175,7 @@ void loop(void)  //                                                           lo
     
     cout <<" ready to exploit-- " <<endl; 
      
-    getch();        
+    //getch();        
     Q_exploit();
   
 }   
@@ -195,13 +194,14 @@ void main(void)
 
     randomize();
 
-    file_agent=0;               
-    column_agent=0;             
+    //file_agent=0;               
+    //column_agent=0;             
 
     Start_Message();       // Messegae of welcome
 
     init_R();                  //We get a random MAZE
     init_S();
+    random_agent();
 
 
     x_agent=x_plot_maze;   //  x_agent:  coordinate x of agent in the screen    
@@ -241,7 +241,9 @@ void main(void)
             case 'R': case 'r':  {
                                    init_R();
                                    init_S();
-                                   loop();
+                                   random_agent();
+                                   plot_maze();
+                                   plot_agent();
                                  }
             break;                     
             
