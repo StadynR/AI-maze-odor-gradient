@@ -267,7 +267,7 @@ void DFS(){
          cont++;
          
          backtrack();
-         //plot_trail();
+         plot_trail();
      }
      else{
          cont++;
@@ -277,9 +277,21 @@ void DFS(){
          path[stcont][0] = unvisited[mov][0];
          path[stcont][1] = unvisited[mov][1];
              
-         //plot_trail();
+         plot_trail();
          }
-}    
+} 
+//-----------------------------------
+void random_agent(void){
+    int i, j;
+    do{
+        i = random(files);
+        j = random(columns);
+        if(R[i][j]==0 || R[i][j]==100){ //if it is not in the wall or in the 
+            file_agent=i;           
+            column_agent=j;  
+        }
+    }while(R[i][j]<0); 
+} 
 //---------------------------------------------------------
 void Q_exploit(void)  
 {
@@ -291,16 +303,16 @@ void Q_exploit(void)
    do
     {
         
-        int rep=0;  //número de pasos que da el agente
-         do
+        //int rep=0;  //número de pasos que da el agente
+         /*do
          {
           i=random(files);
           j=random(columns); 
           temp=R[i][j];             
-         } while(temp==-1);    // el agente se ubica en estado inicial aleatorio con entrada diferente de -1   
+         } while(temp==-1);    // el agente se ubica en estado inicial aleatorio con entrada diferente de -1   */
  
-         file_agent = i;
-         column_agent = j;  
+         //file_agent = i;
+         //column_agent = j;  
          plot_maze();
          plot_agent();
          
@@ -327,15 +339,16 @@ void Q_exploit(void)
            visited[cont][0] = file_agent;
            visited[cont][1] = column_agent;
            
-           plot_maze();
+           //plot_maze();
            plot_agent();                     //  sensor captures color
            delay(31);
-           rep++;
-         }while(captured_color!=YELLOW && rep < 1000);     //hasta que capture recompensa maxima o haya tardado mucho
+           //rep++;
+         }while(captured_color!=YELLOW);     //hasta que capture recompensa maxima o haya tardado mucho
 
         print_visited();
         print_S();  
         delay(1000);
+        random_agent();
         //getch();
     }while(1);      
     

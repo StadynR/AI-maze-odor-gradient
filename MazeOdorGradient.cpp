@@ -164,7 +164,6 @@ void Start_Message(void){
   outtext(" Maze Gradient Program  ");
 
 } 
-
 //-------------------------------------------------------------
 void loop(void)  //                                                           loop  !!                        &&&/&&/&&/////
 {
@@ -176,7 +175,7 @@ void loop(void)  //                                                           lo
     
     cout <<" ready to exploit-- " <<endl; 
      
-    getch();        
+    //getch();        
     Q_exploit();
   
 }   
@@ -195,13 +194,14 @@ void main(void)
 
     randomize();
 
-    file_agent=0;               
-    column_agent=0;             
+    //file_agent=0;               
+    //column_agent=0;             
 
     Start_Message();       // Messegae of welcome
 
     init_R();                  //We get a random MAZE
     init_S();
+    random_agent();
 
 
     x_agent=x_plot_maze;   //  x_agent:  coordinate x of agent in the screen    

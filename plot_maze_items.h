@@ -36,6 +36,27 @@ scale=square_size;
  
 }
 //----------------------------------------------------------------------------------------
+void plot_trail(void)           
+{
+    int color, agent_size=square_size-0;  
+    int x,y;    
+     
+     int offset_x=0;   //   para centrar al agente en x
+     int offset_y=0;   //   para centrar al agente en y
+    
+     x= x_plot_maze;   //   para sincronizarse con el enviroment grafico
+     y= y_plot_maze;   //   
+       
+    x_agent=x+column_agent*square_size;
+    y_agent=y+file_agent*square_size;
+    
+    //captured_color=getpixel(x_agent,y_agent);   //  el sensor captura en una esquina
+     
+     setcolor(LIGHTRED); //  
+     setfillstyle(SOLID_FILL,LIGHTRED);   
+     bar(x_agent+offset_x,y_agent+offset_y,x_agent+agent_size,y_agent+agent_size);
+}
+//----------------------------------------------------------------------------------------
 void plot_agent(void)
 {
 int color,agent_size=square_size-3;  
