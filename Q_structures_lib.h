@@ -347,8 +347,9 @@ void Q_exploit(void)
 
         print_visited();
         print_path();
+        plot_path();
         print_S();  
-        delay(1000);
+        getch();
         random_agent();
         //getch();
     }while(1);      

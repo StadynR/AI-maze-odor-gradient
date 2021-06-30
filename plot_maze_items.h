@@ -38,11 +38,8 @@ scale=square_size;
 //----------------------------------------------------------------------------------------
 void plot_trail(void)           
 {
-    int color, agent_size=square_size-0;  
+    int color;  
     int x,y;    
-     
-     int offset_x=0;   //   para centrar al agente en x
-     int offset_y=0;   //   para centrar al agente en y
     
      x= x_plot_maze;   //   para sincronizarse con el enviroment grafico
      y= y_plot_maze;   //   
@@ -54,7 +51,7 @@ void plot_trail(void)
      
      setcolor(LIGHTRED); //  
      setfillstyle(SOLID_FILL,LIGHTRED);   
-     bar(x_agent+offset_x,y_agent+offset_y,x_agent+agent_size,y_agent+agent_size);
+     bar(x_agent,y_agent,x_agent+square_size,y_agent+square_size);
 }
 //----------------------------------------------------------------------------------------
 void plot_agent(void)
@@ -80,8 +77,26 @@ int offset_y=5;   //   para centrar al agente en y
 }
 
 //----------------------------------------------------------------------------------------------------     
-
-
+void plot_path(void)           
+{
+    int row, col, color;  
+    int x,y;    
+    
+     x= x_plot_maze;   //   para sincronizarse con el enviroment grafico
+     y= y_plot_maze;   //   
+     
+    for(int i = 0; i < stcont; i++){
+     color = (i == 0)? GREEN: BLUE; 
+     row = path[i][0];
+     col = path[i][1];
+     x_agent=x+col*square_size;
+     y_agent=y+row*square_size;
+     setcolor(color); //  
+     setfillstyle(SOLID_FILL,color);   
+     bar(x_agent,y_agent,x_agent+square_size,y_agent+square_size);
+    }
+}
+//----------------------------------------------------------------------------------------
 
 
 //
