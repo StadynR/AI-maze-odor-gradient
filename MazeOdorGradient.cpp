@@ -10,8 +10,8 @@ July 22 2021
 //------------------------------------------------------------------------------------------------
 // GLOBALS
    
-#define  files 45
-#define  columns 75    //       size of the graphic maze   
+#define  files 28
+#define  columns 70    //       size of the graphic maze   
 
 int b_flag;
 int stop;
