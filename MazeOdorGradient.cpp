@@ -163,7 +163,8 @@ void Start_Message(void){
   setcolor(WHITE);
   outtext(" Maze Gradient Program  ");
 
-} 
+}
+
 //-------------------------------------------------------------
 void loop(void)  //                                                           loop  !!                        &&&/&&/&&/////
 {

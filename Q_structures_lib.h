@@ -351,7 +351,6 @@ void Q_exploit(void)
         print_S();  
         getch();
         random_agent();
-        //getch();
     }while(1);      
     
     //cout <<" one problem solved-- " <<endl;    

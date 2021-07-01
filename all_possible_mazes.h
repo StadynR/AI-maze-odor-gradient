@@ -146,6 +146,7 @@ void random_chees(void){
     }while(R[aux_x][aux_y]<0);
     
 } 
+//-------------------------------------------------------
 
 void init_R(void)
 {
