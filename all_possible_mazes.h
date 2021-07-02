@@ -140,8 +140,9 @@ void random_chees(void){
         aux_y = random(columns);
 
         if(R[aux_x][aux_y]==0){ //new chees
-            R[aux_x][aux_y] = 100;   
-            //captured_chees++;
+            R[aux_x][aux_y] = 100; 
+            file_cheese = aux_x;
+            column_cheese = aux_y;  
         }
     }while(R[aux_x][aux_y]<0);
     

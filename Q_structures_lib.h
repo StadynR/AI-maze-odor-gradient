@@ -98,7 +98,7 @@ void move_left(void)
 {
  int temp;
     temp=getpixel(x_agent-square_size,y_agent);   // revisa cercania a la izquierda
-    if(temp==7||temp==14||temp==12) // movimiento válido
+    if(temp!=BLACK) // movimiento válido
     {  
      x_agent=x_agent-square_size;
      column_agent--;
@@ -109,7 +109,7 @@ void move_right(void)
 {
  int temp;   
   temp=getpixel(x_agent+square_size,y_agent);   // revisa cercania a la derecha
-  if(temp==7||temp==14||temp==12)
+  if(temp!=BLACK)
      {
       x_agent=x_agent+square_size;
       column_agent++; 
@@ -120,7 +120,7 @@ void move_up(void)
 {
  int temp;
     temp=getpixel(x_agent,y_agent-square_size);   // revisa cercania arriba
-    if(temp==7||temp==14||temp==12)
+    if(temp!=BLACK)
     {
      y_agent=y_agent-square_size;
      file_agent--;
@@ -131,7 +131,7 @@ void move_down(void)
 {
  int temp;
    temp=getpixel(x_agent,y_agent+square_size);    // revisa cercania abajo
-   if(temp==7||temp==14||temp==12)
+   if(temp!=BLACK)
    {
     y_agent=y_agent+square_size; 
     file_agent++;
@@ -294,66 +294,65 @@ void random_agent(void){
 } 
 //---------------------------------------------------------
 void Q_exploit(void)  
-{
- int i,j,k;    
- int temp; 
- //int max;
-    
- randomize(); 
-   do
     {
+     int i,j,k;    
+     int temp; 
+     //int max;
         
-        //int rep=0;  //número de pasos que da el agente
-         /*do
-         {
-          i=random(files);
-          j=random(columns); 
-          temp=R[i][j];             
-         } while(temp==-1);    // el agente se ubica en estado inicial aleatorio con entrada diferente de -1   */
- 
-         //file_agent = i;
-         //column_agent = j;  
-         plot_maze();
-         plot_agent();
-         
-         clear_visited();
-         clear_path();
-         cont = 0;
-         stcont = 0;
-           
-         path[stcont][0] = file_agent;
-         path[stcont][1] = column_agent;
-         visited[cont][0] = file_agent;
-         visited[cont][1] = column_agent;
-                  
-         do
-          { 
-           
-           DFS();
-              
-           if(mov==0) move_left();
-           if(mov==1) move_right(); 
-           if(mov==2) move_up();
-           if(mov==3) move_down(); 
-           
-           visited[cont][0] = file_agent;
-           visited[cont][1] = column_agent;
-           
-           //plot_maze();
-           plot_agent();                     //  sensor captures color
-           delay(31);
-           //rep++;
-         }while(captured_color!=YELLOW);     //hasta que capture recompensa maxima o haya tardado mucho
+     randomize(); 
 
-        print_visited();
-        print_path();
-        print_S();  
-        delay(1000);
-        random_agent();
-        //getch();
-    }while(1);      
-    
-    //cout <<" one problem solved-- " <<endl;    
+            
+    //int rep=0;  //número de pasos que da el agente
+     /*do
+     {
+      i=random(files);
+      j=random(columns); 
+      temp=R[i][j];             
+     } while(temp==-1);    // el agente se ubica en estado inicial aleatorio con entrada diferente de -1   */
+
+     //file_agent = i;
+     //column_agent = j;  
+     //plot_maze();
+     plot_agent();
+     
+     clear_visited();
+     clear_path();
+     cont = 0;
+     stcont = 0;
+       
+     path[stcont][0] = file_agent;
+     path[stcont][1] = column_agent;
+     visited[cont][0] = file_agent;
+     visited[cont][1] = column_agent;
+              
+     do
+      { 
+       
+       DFS();
+          
+       if(mov==0) move_left();
+       if(mov==1) move_right(); 
+       if(mov==2) move_up();
+       if(mov==3) move_down(); 
+       
+       visited[cont][0] = file_agent;
+       visited[cont][1] = column_agent;
+       
+       //plot_maze();
+       plot_agent();                     //  sensor captures color
+       delay(31);
+       //rep++;
+     }while(captured_color!=YELLOW);     //hasta que capture recompensa maxima o haya tardado mucho
+
+    print_visited();
+    print_path();
+    print_S();  
+    delay(1000);
+    random_agent();
+    //getch();
+     
+
+        //cout <<" one problem solved-- " <<endl;    
 }  
 //--------------------------------------------------------
 

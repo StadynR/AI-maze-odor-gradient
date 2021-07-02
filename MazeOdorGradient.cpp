@@ -47,6 +47,9 @@ int column_agent;  // column
 int file_NPC;    // file
 int column_NPC;  // column
 
+int file_cheese; //file
+int column_cheese; //column     
+
 int sensor[4];
 int MAX;
 int grad_pointer;
@@ -131,7 +134,7 @@ void loadingBar()
 
     for (int i = 0; i < 26; i++) {
         printf("%c", b);
-        Sleep(100);
+        Sleep(75);
     }
 
     system("cls");
@@ -154,11 +157,11 @@ void Start_Message(void){
   setcolor(GREEN);
   outtext("Maximize the window size ");
 
-  loadingBar();
-
+  //loadingBar();
+  Sleep(100);
   erase_screen();
 
-  moveto(600,0); 
+  moveto(550,0); 
   settextstyle(9,0,2); 
   setcolor(WHITE);
   outtext(" Maze Gradient Program  ");
@@ -170,9 +173,11 @@ void loop(void)  //                                                           lo
 
     plot_maze();
     plot_agent();
+    plot_olor_gradient();
+
     print_R();
     print_S();   //  gradiente de olor
-    
+
     cout <<" ready to exploit-- " <<endl; 
      
     //getch();        
@@ -202,14 +207,14 @@ void main(void)
     init_R();                  //We get a random MAZE
     init_S();
     random_agent();
-
+  
 
     x_agent=x_plot_maze;   //  x_agent:  coordinate x of agent in the screen    
     y_agent=y_plot_maze;   //  y_agent:  coordinate y of agent in the screen  
 
     plot_maze();
     plot_agent();
-
+    plot_olor_gradient();
     stop=0;
 
     /*
@@ -244,6 +249,9 @@ void main(void)
                                    random_agent();
                                    plot_maze();
                                    plot_agent();
+                                   plot_olor_gradient();
+                                   Sleep(10);
+                                   Q_exploit();
                                  }
             break;                     
             
