@@ -158,7 +158,7 @@ void init_R(void)
    else maze_3();
    
    
-   random_chees();
+   //random_chees();
 }
 
 
