@@ -349,8 +349,6 @@ void Q_exploit(void)
         print_path();
         plot_path();
         print_S();  
-        getch();
-        random_agent();
     //}while(1);      
     
     //cout <<" one problem solved-- " <<endl;    

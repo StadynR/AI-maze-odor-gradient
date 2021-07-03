@@ -164,56 +164,6 @@ void Start_Message(void){
   outtext(" Maze Gradient Program  ");
 
 }
-//------------------------------------------------------
-void choose(void)
-{
-    do{
-        //erase_screen();
-        
-        moveto(40,400); 
-        settextstyle(4,0,4); 
-        setcolor(GREEN);
-        outtext(" Do you want to restart the environment? Press 'R' "); 
-        
-        moveto(20,550); 
-        settextstyle(4,0,4); 
-        setcolor(GREEN);
-        outtext(" Do you want change the cheese position? Press 'C' "); 
-        
-        moveto(50,500); 
-        settextstyle(4,0,4); 
-        setcolor(GREEN);
-        outtext(" Do you want change the maze? Press 'M' ");         
-        
-        key=getch();
-        switch(key){
-            case 'R': case 'r':  
-            {
-                init_R();
-                init_S();
-                random_agent();
-                random_chees();
-                plot_maze();
-                plot_agent();
-                loop();
-            } break;
-            case'C': case 'c':
-            {
-                random_chees();
-                loop();
-            } break;
-            case'M': case 'm':
-            {
-                init_R();
-                plot_maze();
-                plot_agent();
-                random_chees();
-
-                loop();
-            }
-        }
-    }while(1);
-}
 //-------------------------------------------------------------
 void loop(void)  //                                                           loop  !!                        &&&/&&/&&/////
 {
@@ -230,6 +180,68 @@ void loop(void)  //                                                           lo
   
 }   
 //------------------------------------------------------
+void choose(void)
+{
+        //erase_screen();
+        
+    
+        moveto(40,400); 
+        settextstyle(4,0,4); 
+        setcolor(GREEN);
+        outtext(" Do you want to restart the environment? Press 'R' "); 
+        
+        moveto(20,550); 
+        settextstyle(4,0,4); 
+        setcolor(GREEN);
+        outtext(" Do you want change the cheese position? Press 'C' "); 
+        
+        moveto(50,500); 
+        settextstyle(4,0,4); 
+        setcolor(GREEN);
+        outtext(" Do you want change the maze? Press 'M' ");         
+        
+        do{
+            key=getch();
+            switch(key){
+                case 'R': case 'r':  
+                {
+                    init_R();
+                    random_chees();
+                    init_S();
+                    random_agent();
+                    plot_maze();
+                    plot_agent();
+                } break;
+                case'C': case 'c':
+                {
+                    random_chees();
+                    init_S();
+                    plot_maze();
+                    plot_agent();
+                } break;
+                case'M': case 'm':
+                {
+                    init_R();
+                    init_S();
+                    plot_maze();
+                    plot_agent();
+                    //random_chees();
+                } break;
+                case'A': case 'a':
+                {
+                    random_agent();
+                    plot_maze();
+                    plot_agent();
+                    //random_chees();
+                } break;
+                case ' ':
+                {
+                    loop();
+                    random_agent();
+                }
+            }
+        }while(key!='x' && key!='X');
+}
 //===================================================================================================
 void main(void)
 { 
@@ -248,20 +260,22 @@ void main(void)
     //column_agent=0;             
 
     Start_Message();       // Messegae of welcome
-
+    
     init_R();                  //We get a random MAZE
+    random_chees();
     init_S();
     random_agent();
-
 
     x_agent=x_plot_maze;   //  x_agent:  coordinate x of agent in the screen    
     y_agent=y_plot_maze;   //  y_agent:  coordinate y of agent in the screen  
 
+    print_R();
+    print_S();   //  gradiente de olor
     plot_maze();
     plot_agent();
-
+    
     stop=0;
-    loop();
+    //loop();
     choose();
 
     /*
