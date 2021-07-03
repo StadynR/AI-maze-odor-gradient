@@ -295,13 +295,13 @@ void random_agent(void){
 //---------------------------------------------------------
 void Q_exploit(void)  
 {
- int i,j,k;    
- int temp; 
+ //int i,j,k;    
+ //int temp; 
  //int max;
     
  randomize(); 
-   do
-    {
+   //do
+    //{
         
         //int rep=0;  //número de pasos que da el agente
          /*do
@@ -351,7 +351,7 @@ void Q_exploit(void)
         print_S();  
         getch();
         random_agent();
-    }while(1);      
+    //}while(1);      
     
     //cout <<" one problem solved-- " <<endl;    
 }  
