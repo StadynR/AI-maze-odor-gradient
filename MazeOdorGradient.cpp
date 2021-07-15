@@ -57,7 +57,7 @@ int cont;
 int stcont;
 int mov;
 
-int aux_x, aux_y;
+int file_cheese, column_cheese;
 int player_captured_color;
 
 //----------------------------------------)))

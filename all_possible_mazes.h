@@ -136,14 +136,14 @@ void random_chees(void){
         }    
 
     do{
-        aux_x = random(files);
-        aux_y = random(columns);
+        file_cheese = random(files);
+        column_cheese = random(columns); 
 
-        if(R[aux_x][aux_y]==0){ //new chees
-            R[aux_x][aux_y] = 100;   
+        if(R[file_cheese][column_cheese]==0){ //new chees
+            R[file_cheese][column_cheese] = 100;   
             //captured_chees++;
         }
-    }while(R[aux_x][aux_y]<0);
+    }while(R[file_cheese][column_cheese]<0);
     
 } 
 //-------------------------------------------------------

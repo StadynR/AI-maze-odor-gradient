@@ -48,8 +48,8 @@ void init_S(void)
    for (int i=0; i < files; i++)
    for (int j=0; j < columns; j++)
     {
-     disty = i-aux_x;
-     distx = j-aux_y;
+     disty = i-file_cheese;
+     distx = j-column_cheese;
      k = sqrt(distx*distx+disty*disty);   // distancia pitagoras a coordenadas (0,0)
      if(R[i][j]!=-1) S[i][j]=100* exp(-lambda*step*k);  // concentracion % a esa distancia
     }   
