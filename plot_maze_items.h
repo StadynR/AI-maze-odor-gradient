@@ -135,7 +135,7 @@ void plot_olor_gradient(void)               ////       PLOT MAZE GRAPHICS
              bar(sx,sy,sx+scale,sy+scale) ;  
            }
 
-          if(i==file_agent && j==column_agent) plot_agent();
+          //if(i==file_agent && j==column_agent) plot_agent();
          }
       }
       Sleep(10);

@@ -72,15 +72,6 @@ void print_path(){
     cout << endl;
 }
 //------------------------------------------------------------
-/* void print_unvisited(){
- *     cout << "Unvisited: ";
- *     for(int i = 0; i < 4; i++){
- *         cout << "[" << unvisited[i][0] << ", " << unvisited[i][1] << "] ";
- *     }
- *     cout << endl;
- * }
- */
-//------------------------------------------------------------
 void clear_visited(){
     for(int i = 0; i <= cont; i++){
         visited[i][0] = -1;

@@ -208,32 +208,32 @@ void choose(void)
                     init_S();
                     random_agent();
                     plot_maze();
-                    plot_agent();
                     plot_olor_gradient();
+                    plot_agent();
                 } break;
                 case'C': case 'c':
                 {
                     random_chees();
                     init_S();
                     plot_maze();
-                    plot_agent();
                     plot_olor_gradient();
+                    plot_agent();
                 } break;
                 case'M': case 'm':
                 {
                     init_R();
                     init_S();
                     plot_maze();
-                    plot_agent();
                     plot_olor_gradient();
+                    plot_agent();
                     //random_chees();
                 } break;
                 case'A': case 'a':
                 {
                     random_agent();
                     plot_maze();
-                    plot_agent();
                     plot_olor_gradient();
+                    plot_agent();
                     //random_chees();
                 } break;
                 case ' ':
