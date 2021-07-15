@@ -166,7 +166,7 @@ void Start_Message(void){
 void loop(void)  //                                                           loop  !!                        &&&/&&/&&/////
 {
 
-    plot_maze();
+    //plot_maze();
     plot_agent();
     print_R();
     print_S();   //  gradiente de olor
@@ -209,6 +209,7 @@ void choose(void)
                     random_agent();
                     plot_maze();
                     plot_agent();
+                    plot_olor_gradient();
                 } break;
                 case'C': case 'c':
                 {
@@ -216,6 +217,7 @@ void choose(void)
                     init_S();
                     plot_maze();
                     plot_agent();
+                    plot_olor_gradient();
                 } break;
                 case'M': case 'm':
                 {
@@ -223,6 +225,7 @@ void choose(void)
                     init_S();
                     plot_maze();
                     plot_agent();
+                    plot_olor_gradient();
                     //random_chees();
                 } break;
                 case'A': case 'a':
@@ -230,6 +233,7 @@ void choose(void)
                     random_agent();
                     plot_maze();
                     plot_agent();
+                    plot_olor_gradient();
                     //random_chees();
                 } break;
                 case ' ':

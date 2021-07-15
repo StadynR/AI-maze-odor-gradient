@@ -288,7 +288,7 @@ void Q_exploit(void)
     
      randomize(); 
 
-     plot_maze();
+     //plot_maze();
      plot_agent();
      
      clear_visited();
