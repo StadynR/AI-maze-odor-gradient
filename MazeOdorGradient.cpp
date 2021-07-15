@@ -208,7 +208,6 @@ void choose(void)
                     init_S();
                     random_agent();
                     plot_maze();
-                    plot_olor_gradient();
                     plot_agent();
                 } break;
                 case'C': case 'c':
@@ -216,7 +215,6 @@ void choose(void)
                     random_chees();
                     init_S();
                     plot_maze();
-                    plot_olor_gradient();
                     plot_agent();
                 } break;
                 case'M': case 'm':
@@ -224,7 +222,6 @@ void choose(void)
                     init_R();
                     init_S();
                     plot_maze();
-                    plot_olor_gradient();
                     plot_agent();
                     //random_chees();
                 } break;
@@ -232,7 +229,6 @@ void choose(void)
                 {
                     random_agent();
                     plot_maze();
-                    plot_olor_gradient();
                     plot_agent();
                     //random_chees();
                 } break;
