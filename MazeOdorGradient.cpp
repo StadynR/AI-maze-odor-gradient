@@ -152,7 +152,7 @@ void Start_Message(void){
   setcolor(GREEN);
   outtext("Maximize the window size ");
 
-  loadingBar();
+  //loadingBar();
 
   erase_screen();
 
@@ -271,6 +271,7 @@ void main(void)
     print_S();   //  gradiente de olor
     plot_maze();
     plot_agent();
+    plot_olor_gradient();
     
     stop=0;
     //loop();
