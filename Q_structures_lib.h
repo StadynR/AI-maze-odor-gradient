@@ -36,7 +36,7 @@ void print_S(void)
 //------------------------------------------------------------------------------------------------
 void init_S(void)
 {
- float lambda=50;    //  costante de decaimiento con la distancia
+ float lambda=10;    //  costante de decaimiento con la distancia
  //float N=1.0;         //   N : scent concentration in a given square
  float step=0.01;     // cuanto se avanza en cada loop  
  int k, distx, disty;
@@ -169,7 +169,7 @@ bool already_visited(int row, int col)
 //--------------------------------------------------------
 void search_for_MAX_unvisited(void) 
 {
- int i,j;
+ int i,j, sum = 0, r, lim_l, lim_r;
     
     sensor[0]= S[file_agent][column_agent-1];    // lee  a izquierda
     if(column_agent==0 || already_visited(file_agent, column_agent-1)) sensor[0]=-1;            // desborde a la izquierd  
@@ -188,12 +188,23 @@ void search_for_MAX_unvisited(void)
     
     if(no_unvisited()) return;
     else{
-        do{ 
-           i = random(4); 
-        }while(sensor[i]==-1);
-        MAX=sensor[i];
-        grad_pointer=i;
-        //cout <<" MAX: "<< MAX <<endl; 
+        for(i=0;i<4;i++){
+        if(sensor[i] != -1)
+            sum+=sensor[i];
+        }
+        r = random(sum);
+        lim_l = 0;
+        for(i=0;i<4;i++){ 
+            if(sensor[i]!=-1){
+                lim_r = sensor[i] + lim_l;
+                if(r >= lim_l && r <= lim_r){
+                    MAX=sensor[i];
+                    grad_pointer = i;
+                    break;
+                }
+                lim_l = lim_r;
+            }
+        }
     }
 }
 //------------------------------------------------------------
@@ -274,60 +285,43 @@ void random_agent(void){
 //---------------------------------------------------------
 void Q_exploit(void)  
 {
- //int i,j,k;    
- //int temp; 
- //int max;
     
- randomize(); 
-   //do
-    //{
-        
-        //int rep=0;  //número de pasos que da el agente
-         /*do
-         {
-          i=random(files);
-          j=random(columns); 
-          temp=R[i][j];             
-         } while(temp==-1);    // el agente se ubica en estado inicial aleatorio con entrada diferente de -1   */
- 
-         //file_agent = i;
-         //column_agent = j;  
-         plot_maze();
-         plot_agent();
-         
-         clear_visited();
-         clear_path();
-         cont = 0;
-         stcont = 0;
-                  
-         do
-          {
-              
-           DFS();
-            
-           plot_trail();              
-           if(mov==0) move_left();
-           if(mov==1) move_right(); 
-           if(mov==2) move_up();
-           if(mov==3) move_down();
-           
-           //plot_maze();
-           plot_agent();                     //  sensor captures color
-           if(kbhit())
-            {
-                key=getch();
-                if(key=='P' || key=='p')
-                        getch();
-            }
-           delay(31);
-           //rep++;
-         }while(captured_color!=YELLOW);     //hasta que capture recompensa maxima o haya tardado mucho
+     randomize(); 
 
-        print_visited();
-        print_path();
-        plot_path();
-        print_S();  
-    //}while(1);      
+     plot_maze();
+     plot_agent();
+     
+     clear_visited();
+     clear_path();
+     cont = 0;
+     stcont = 0;
+              
+     do
+      {
+          
+       DFS();
+        
+       plot_trail();              
+       if(mov==0) move_left();
+       if(mov==1) move_right(); 
+       if(mov==2) move_up();
+       if(mov==3) move_down();
+       
+       //plot_maze();
+       plot_agent();                     //  sensor captures color
+       if(kbhit())
+        {
+            key=getch();
+            if(key=='P' || key=='p')
+                    getch();
+        }
+       delay(31);
+     }while(captured_color!=YELLOW);     //hasta que capture recompensa maxima o haya tardado mucho
+
+    print_visited();
+    print_path();
+    plot_path();
+    print_S();     
     
     //cout <<" one problem solved-- " <<endl;    
 }  
