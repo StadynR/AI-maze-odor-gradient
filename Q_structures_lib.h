@@ -36,7 +36,7 @@ void print_S(void)
 //------------------------------------------------------------------------------------------------
 void init_S(void)
 {
- float lambda=50;    //  costante de decaimiento con la distancia
+ float lambda=10;    //  costante de decaimiento con la distancia
  //float N=1.0;         //   N : scent concentration in a given square
  float step=0.01;     // cuanto se avanza en cada loop  
  int k, distx, disty;
@@ -90,7 +90,7 @@ void move_left(void)
 {
  int temp;
     temp=getpixel(x_agent-square_size,y_agent);   // revisa cercania a la izquierda
-    if(temp!=0) // movimiento válido
+    if(temp!=BLACK) // movimiento válido
     {  
      x_agent=x_agent-square_size;
      column_agent--;
@@ -101,7 +101,7 @@ void move_right(void)
 {
  int temp;   
   temp=getpixel(x_agent+square_size,y_agent);   // revisa cercania a la derecha
-  if(temp!=0)
+  if(temp!=BLACK)
      {
       x_agent=x_agent+square_size;
       column_agent++; 
@@ -112,7 +112,7 @@ void move_up(void)
 {
  int temp;
     temp=getpixel(x_agent,y_agent-square_size);   // revisa cercania arriba
-    if(temp!=0)
+    if(temp!=BLACK)
     {
      y_agent=y_agent-square_size;
      file_agent--;
@@ -123,7 +123,7 @@ void move_down(void)
 {
  int temp;
    temp=getpixel(x_agent,y_agent+square_size);    // revisa cercania abajo
-   if(temp!=0)
+   if(temp!=BLACK)
    {
     y_agent=y_agent+square_size; 
     file_agent++;
@@ -174,16 +174,18 @@ void search_for_MAX_unvisited(void)
     sensor[3]= S[file_agent+1][column_agent];    // lee abjo
     if(file_agent==files-1 || already_visited(file_agent+1, column_agent)) sensor[3]=-1;
 
-    MAX=sensor[0];
+    //MAX=sensor[0];
     //for(i=0;i<4;i++) if(sensor[i]>=MAX) {MAX=sensor[i];grad_pointer=i;}  // grad_pointer apunta al maximo valor
     
-    if(no_unvisited()) return;
+    if(no_unvisited()) MAX = -1;
     else{
         for(i=0;i<4;i++){
         if(sensor[i] != -1)
             sum+=sensor[i];
         }
-        r = random(sum);
+        if(sum > 1) r = random(sum); else r = 0;
+        //cout << "suma: " << sum << " r: " << r << endl;
+        //getch();
         lim_l = 0;
         for(i=0;i<4;i++){ 
             if(sensor[i]!=-1){

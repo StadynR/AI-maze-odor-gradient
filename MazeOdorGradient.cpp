@@ -275,7 +275,7 @@ void main(void)
     print_S();   //  gradiente de olor
     plot_maze();
     plot_agent();
-    plot_olor_gradient();
+    //plot_olor_gradient();
     
     stop=0;
     //loop();
