@@ -97,7 +97,51 @@ void plot_path(void)
     }
 }
 //----------------------------------------------------------------------------------------
+void plot_olor_gradient(void)               ////       PLOT MAZE GRAPHICS
+{
+   int i,j,sx,sy,x,y,color,scale,a,b,c,d; 
+   int temp; 
+    
+   x= x_plot_maze;
+   y= y_plot_maze;   
+   scale=square_size;
 
+
+   for(int k=0;k<columns;k++){
+      //restric files
+      a = file_cheese-k; b = file_cheese+k;
+      if(a<0) a=0; //do not exit the maze
+      if(b>files) b = files-1; //do not exit the maze
+
+      //restirc columns
+      c = column_cheese-k; d = column_cheese+k;
+      if(c<0) c=0;
+      if(d>columns) d = columns-1;
+
+      for(i=a;i<b;i++){
+         y=y_plot_maze;   
+         sy = y+i*scale; 
+         for(j=c;j<d;j++){
+          sx = x+j*scale;
+          temp=S[i][j];   
+          if(temp>0 && temp<=25) color=LIGHTGREEN;          
+          if(temp>25&& temp<=50) color=LIGHTCYAN;            
+          if(temp>50&& temp<=75) color=LIGHTMAGENTA;     
+          if(temp>75&& temp<=99) color=LIGHTBLUE;     
+          if(temp==100) color=YELLOW;     // TOP REWARD
+          if(temp>0){
+             setcolor(color); 
+             setfillstyle(SOLID_FILL,color); 
+             bar(sx,sy,sx+scale,sy+scale) ;  
+           }
+
+          if(i==file_agent && j==column_agent) plot_agent();
+         }
+      }
+      Sleep(25);
+   }
+}
+//----------------------------------------------------------------------------------------
 
 //
 // cout <<" x_agent: "<< x_agent <<endl; 
