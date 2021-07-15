@@ -53,11 +53,9 @@ int grad_pointer;
 
 int path[files*columns*3][2];
 int visited[files*columns][2];
-int unvisited[4][2];
 int cont;
 int stcont;
 int mov;
-bool no_unvisited = false;
 
 int aux_x, aux_y;
 int player_captured_color;

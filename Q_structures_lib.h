@@ -36,14 +36,14 @@ void print_S(void)
 //------------------------------------------------------------------------------------------------
 void init_S(void)
 {
- float lambda=10;    //  costante de decaimiento con la distancia
+ float lambda=50;    //  costante de decaimiento con la distancia
  //float N=1.0;         //   N : scent concentration in a given square
  float step=0.01;     // cuanto se avanza en cada loop  
  int k, distx, disty;
  
    for (int i=0; i < files; i++)
    for (int j=0; j < columns; j++)
-    S[i][j]=0;
+    S[i][j]=-1;
     
    for (int i=0; i < files; i++)
    for (int j=0; j < columns; j++)
@@ -72,13 +72,14 @@ void print_path(){
     cout << endl;
 }
 //------------------------------------------------------------
-void print_unvisited(){
-    cout << "Unvisited: ";
-    for(int i = 0; i < 4; i++){
-        cout << "[" << unvisited[i][0] << ", " << unvisited[i][1] << "] ";
-    }
-    cout << endl;
-}
+/* void print_unvisited(){
+ *     cout << "Unvisited: ";
+ *     for(int i = 0; i < 4; i++){
+ *         cout << "[" << unvisited[i][0] << ", " << unvisited[i][1] << "] ";
+ *     }
+ *     cout << endl;
+ * }
+ */
 //------------------------------------------------------------
 void clear_visited(){
     for(int i = 0; i <= cont; i++){
@@ -137,29 +138,13 @@ void move_down(void)
     file_agent++;
    }   
 }
-//--------------------------------------------------------
-void search_for_MAX_unvisited(void) 
-{
-    int row, col;
-    
-    for (int i = 0; i < 4; i++)
-    {
-        row = unvisited[i][0];
-        col = unvisited[i][1];
-        sensor[i] = S[row][col];    
-        if(row==-1 && col==-1) sensor[i]=-1; 
-    }
-
-    MAX=sensor[0];
-    for(int i = 0; i < 4; i++) if(sensor[i] >= MAX) { MAX=sensor[i];grad_pointer=i; }  // grad_pointer apunta al maximo valor
-}
 //-------------------------------------------------------------
-bool not_visited(int row, int col) 
+bool no_unvisited() 
 { 
     bool f = true;
     
-    for(int i = 0; i < cont; i++){
-        if(visited[i][0] == row && visited[i][1] == col){
+    for(int i = 0; i < 4; i++){
+        if(sensor[i] != -1){
             f = false; 
             break;
         }
@@ -167,50 +152,49 @@ bool not_visited(int row, int col)
     
     return f;
 }
-//-------------------------------------------------------------
-void get_unvisited_neighbors() 
+//------------------------------------------------------------
+bool already_visited(int row, int col) 
 { 
-    no_unvisited = true;
-    int temp;
+    bool f = false;
     
-    //cout << "row: " << file_agent << " col: " << column_agent << endl;
-    
-    temp = R[file_agent][column_agent-1];
-    if(column_agent == 0) temp = -1;
-    if(temp != -1 && not_visited(file_agent, column_agent-1)){
-        //cout << "R left: " << temp << endl;
-        unvisited[0][0] = file_agent; 
-        unvisited[0][1] = column_agent-1; 
-        no_unvisited = false;
+    for(int i = 0; i < cont; i++){
+        if(visited[i][0] == row && visited[i][1] == col){
+            f = true; 
+            break;
+        }
     }
     
-    temp = R[file_agent][column_agent+1];
-    if(column_agent == columns-1) temp = -1;
-    if(temp != -1 && not_visited(file_agent, column_agent+1)){ 
-        //cout << "R right: " << temp << endl;
-        unvisited[1][0] = file_agent; 
-        unvisited[1][1] = column_agent+1; 
-        no_unvisited = false;
-    }
+    return f;
+}
+//--------------------------------------------------------
+void search_for_MAX_unvisited(void) 
+{
+ int i,j;
     
-    temp = R[file_agent-1][column_agent];
-    if(file_agent == 0) temp = -1;
-    if(temp != -1 && not_visited(file_agent-1, column_agent)){ 
-        //cout << "R up: " << temp << endl;
-        unvisited[2][0] = file_agent-1; 
-        unvisited[2][1] = column_agent;
-        no_unvisited = false;
-    }
+    sensor[0]= S[file_agent][column_agent-1];    // lee  a izquierda
+    if(column_agent==0 || already_visited(file_agent, column_agent-1)) sensor[0]=-1;            // desborde a la izquierd  
+        
+    sensor[1]= S[file_agent][column_agent+1];    // lee a  derecha
+    if(column_agent==columns-1 || already_visited(file_agent, column_agent+1)) sensor[1]=-1;
     
-    temp = R[file_agent+1][column_agent];
-    if(file_agent == files-1) temp = -1;
-    if(temp != -1 && not_visited(file_agent+1, column_agent)){ 
-        //cout << "R down: " << temp << endl;
-        unvisited[3][0] = file_agent+1; 
-        unvisited[3][1] = column_agent; 
-        no_unvisited = false;
-    }
+    sensor[2]= S[file_agent-1][column_agent];    // lee arriba
+    if(file_agent==0 || already_visited(file_agent-1, column_agent)) sensor[2]=-1;
+    
+    sensor[3]= S[file_agent+1][column_agent];    // lee abjo
+    if(file_agent==files-1 || already_visited(file_agent+1, column_agent)) sensor[3]=-1;
 
+    MAX=sensor[0];
+    //for(i=0;i<4;i++) if(sensor[i]>=MAX) {MAX=sensor[i];grad_pointer=i;}  // grad_pointer apunta al maximo valor
+    
+    if(no_unvisited()) return;
+    else{
+        do{ 
+           i = random(4); 
+        }while(sensor[i]==-1);
+        MAX=sensor[i];
+        grad_pointer=i;
+        //cout <<" MAX: "<< MAX <<endl; 
+    }
 }
 //------------------------------------------------------------
 void backtrack() 
@@ -253,31 +237,26 @@ void backtrack()
 }
 //------------------------------------------------------------
 void DFS(){
-        
-     for(int i = 0; i < 4; i++){
-         unvisited[i][0] = -1;
-         unvisited[i][1] = -1;
-     }
+      
+     path[stcont][0] = file_agent;
+     path[stcont][1] = column_agent;
+     visited[cont][0] = file_agent;
+     visited[cont][1] = column_agent;    
      //cout << "Stack pos: " << stcont << " , row: " << file_agent << " , col: " << column_agent << endl;
      //print_visited();
-     get_unvisited_neighbors();
-     //print_unvisited();
-     if(no_unvisited){
+    
+     search_for_MAX_unvisited();
+     //cout << "max: " << MAX << " mov: " << grad_pointer << endl;
+     //getch();
+     if (MAX == -1){
          stcont--;
          cont++;
-         
          backtrack();
-         plot_trail();
      }
      else{
          cont++;
-         stcont++;
-         search_for_MAX_unvisited();       
+         stcont++;       
          mov = grad_pointer;          // el agente se mueve a un nuevo estado
-         path[stcont][0] = unvisited[mov][0];
-         path[stcont][1] = unvisited[mov][1];
-             
-         plot_trail();
          }
 } 
 //-----------------------------------
@@ -320,27 +299,26 @@ void Q_exploit(void)
          clear_path();
          cont = 0;
          stcont = 0;
-           
-         path[stcont][0] = file_agent;
-         path[stcont][1] = column_agent;
-         visited[cont][0] = file_agent;
-         visited[cont][1] = column_agent;
                   
          do
-          { 
-           
-           DFS();
+          {
               
+           DFS();
+            
+           plot_trail();              
            if(mov==0) move_left();
            if(mov==1) move_right(); 
            if(mov==2) move_up();
-           if(mov==3) move_down(); 
-           
-           visited[cont][0] = file_agent;
-           visited[cont][1] = column_agent;
+           if(mov==3) move_down();
            
            //plot_maze();
            plot_agent();                     //  sensor captures color
+           if(kbhit())
+            {
+                key=getch();
+                if(key=='P' || key=='p')
+                        getch();
+            }
            delay(31);
            //rep++;
          }while(captured_color!=YELLOW);     //hasta que capture recompensa maxima o haya tardado mucho
