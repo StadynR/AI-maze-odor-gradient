@@ -138,7 +138,7 @@ void plot_olor_gradient(void)               ////       PLOT MAZE GRAPHICS
           if(i==file_agent && j==column_agent) plot_agent();
          }
       }
-      Sleep(25);
+      Sleep(10);
    }
 }
 //----------------------------------------------------------------------------------------

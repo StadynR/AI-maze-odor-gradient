@@ -36,7 +36,7 @@ void print_S(void)
 //------------------------------------------------------------------------------------------------
 void init_S(void)
 {
- float lambda=10;    //  costante de decaimiento con la distancia
+ float lambda=50;    //  costante de decaimiento con la distancia
  //float N=1.0;         //   N : scent concentration in a given square
  float step=0.01;     // cuanto se avanza en cada loop  
  int k, distx, disty;
@@ -99,7 +99,7 @@ void move_left(void)
 {
  int temp;
     temp=getpixel(x_agent-square_size,y_agent);   // revisa cercania a la izquierda
-    if(temp==7||temp==14||temp==12) // movimiento válido
+    if(temp!=0) // movimiento válido
     {  
      x_agent=x_agent-square_size;
      column_agent--;
@@ -110,7 +110,7 @@ void move_right(void)
 {
  int temp;   
   temp=getpixel(x_agent+square_size,y_agent);   // revisa cercania a la derecha
-  if(temp==7||temp==14||temp==12)
+  if(temp!=0)
      {
       x_agent=x_agent+square_size;
       column_agent++; 
@@ -121,7 +121,7 @@ void move_up(void)
 {
  int temp;
     temp=getpixel(x_agent,y_agent-square_size);   // revisa cercania arriba
-    if(temp==7||temp==14||temp==12)
+    if(temp!=0)
     {
      y_agent=y_agent-square_size;
      file_agent--;
@@ -132,7 +132,7 @@ void move_down(void)
 {
  int temp;
    temp=getpixel(x_agent,y_agent+square_size);    // revisa cercania abajo
-   if(temp==7||temp==14||temp==12)
+   if(temp!=0)
    {
     y_agent=y_agent+square_size; 
     file_agent++;

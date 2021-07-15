@@ -165,8 +165,8 @@ void Start_Message(void){
 //-------------------------------------------------------------
 void loop(void)  //                                                           loop  !!                        &&&/&&/&&/////
 {
-
-    //plot_maze();
+    plot_maze();
+    plot_olor_gradient();
     plot_agent();
     print_R();
     print_S();   //  gradiente de olor
@@ -183,17 +183,17 @@ void choose(void)
         //erase_screen();
         
     
-        moveto(40,400); 
+        moveto(40,400+200); 
         settextstyle(4,0,4); 
         setcolor(GREEN);
         outtext(" Do you want to restart the environment? Press 'R' "); 
         
-        moveto(20,550); 
+        moveto(20,550+200); 
         settextstyle(4,0,4); 
         setcolor(GREEN);
         outtext(" Do you want change the cheese position? Press 'C' "); 
         
-        moveto(50,500); 
+        moveto(50,500+200); 
         settextstyle(4,0,4); 
         setcolor(GREEN);
         outtext(" Do you want change the maze? Press 'M' ");         
