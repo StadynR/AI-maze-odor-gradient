@@ -20,6 +20,7 @@ char dummy[1];
 char key, color;
 
 int x_agent, y_agent;
+int x_cheese, y_cheese;
 
 int x_plot_maze=30;
 int y_plot_maze=30;
@@ -96,7 +97,7 @@ void grafico(void)
 
     ErrorCode = graphresult();            /* Read result of initialization*/
     if( ErrorCode != grOk )              /* Error occured during init    */
-    {
+    {-
        printf(" Graphics System Error: %s", grapherrormsg( ErrorCode ) );
        exit( 1 );
     }
@@ -183,54 +184,62 @@ void choose(void)
         //erase_screen();
         
     
-        moveto(40,400+200); 
+        moveto(40,420+100); 
         settextstyle(4,0,4); 
         setcolor(GREEN);
         outtext(" Do you want to restart the environment? Press 'R' "); 
         
-        moveto(20,550+200); 
+        moveto(20,470+100); 
         settextstyle(4,0,4); 
         setcolor(GREEN);
         outtext(" Do you want change the cheese position? Press 'C' "); 
         
-        moveto(50,500+200); 
+        moveto(50,520+100); 
         settextstyle(4,0,4); 
         setcolor(GREEN);
-        outtext(" Do you want change the maze? Press 'M' ");         
+        outtext(" Do you want change the maze? Press 'M' ");
+    
+        moveto(50,570+100); 
+        settextstyle(4,0,4); 
+        setcolor(GREEN);
+        outtext(" Do you want change the agent position? Press 'A' ");     
         
         do{
             key=getch();
             switch(key){
-                case 'R': case 'r':  
+                case 'R': case 'r':  //cambia todo el ambiente
                 {
                     init_R();
-                    random_chees();
+                    random_cheese();
                     init_S();
                     random_agent();
                     plot_maze();
                     plot_agent();
+                    plot_cheese();
                 } break;
-                case'C': case 'c':
+                case'C': case 'c':   // cambia solo el queso
                 {
-                    random_chees();
+                    random_cheese();
                     init_S();
                     plot_maze();
                     plot_agent();
+                    plot_cheese();
                 } break;
-                case'M': case 'm':
+                case'M': case 'm':    //cambia el maze
                 {
                     init_R();
                     init_S();
                     plot_maze();
                     plot_agent();
-                    //random_chees();
+                    plot_cheese();
+                    
                 } break;
-                case'A': case 'a':
+                case'A': case 'a':     //cambia el agente
                 {
                     random_agent();
                     plot_maze();
                     plot_agent();
-                    //random_chees();
+                    plot_cheese();
                 } break;
                 case ' ':
                 {
@@ -260,17 +269,21 @@ void main(void)
     Start_Message();       // Messegae of welcome
     
     init_R();                  //We get a random MAZE
-    random_chees();
+    random_cheese();
     init_S();
     random_agent();
 
     x_agent=x_plot_maze;   //  x_agent:  coordinate x of agent in the screen    
     y_agent=y_plot_maze;   //  y_agent:  coordinate y of agent in the screen  
+    
+    x_cheese=x_plot_maze;   //  x_cheese:  coordinate x of agent in the screen    
+    y_cheese=y_plot_maze;   //  y_cheese:  coordinate y of agent in the screen  
 
     print_R();
     print_S();   //  gradiente de olor
     plot_maze();
     plot_agent();
+    plot_cheese();
     //plot_olor_gradient();
     
     stop=0;

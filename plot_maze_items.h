@@ -77,6 +77,29 @@ int offset_y=5;   //   para centrar al agente en y
 }
 
 //----------------------------------------------------------------------------------------------------     
+void plot_cheese(void)
+{
+int color,cheese_size=square_size-3;  
+int x,y;    
+    
+int offset_x=5;   //   para centrar al agente en x
+int offset_y=5;   //   para centrar al agente en y
+
+ x= x_plot_maze;   //   para sincronizarse con el enviroment grafico
+ y= y_plot_maze;   //   
+   
+    x_cheese=x+column_cheese*square_size;
+    y_cheese=y+file_cheese*square_size;
+    
+    captured_color=getpixel(x_cheese,y_cheese);   //  el sensor captura en una esquina
+ 
+ setcolor(YELLOW); //  
+ setfillstyle(SOLID_FILL,RED);   
+ bar(x_cheese+offset_x,y_cheese+offset_y,x_cheese+cheese_size,y_cheese+cheese_size) ;   
+    
+}
+
+//----------------------------------------------------------------------------------------------------     
 void plot_path(void)           
 {
     int row, col, color;  

@@ -126,26 +126,26 @@ void maze_3(void){
 
 //-------------------------------------------------------
  
-void random_chees(void){
-    int i, j;
+//void random_chees(void){
+//    int i, j;
 
-    for (j=0; j<files;j++) //Remove the current chees
-        for (i=0; i<columns; i++)
-        {
-            if(R[j][i]==100)R[j][i]=0; 
-        }    
+//    for (j=0; j<files;j++) //Remove the current chees
+//        for (i=0; i<columns; i++)
+//        {
+//            if(R[j][i]==100)R[j][i]=0; 
+//        }    
 
-    do{
-        file_cheese = random(files);
-        column_cheese = random(columns); 
+//    do{
+//        file_cheese = random(files);
+//        column_cheese = random(columns); 
 
-        if(R[file_cheese][column_cheese]==0){ //new chees
-            R[file_cheese][column_cheese] = 100;   
-            //captured_chees++;
-        }
-    }while(R[file_cheese][column_cheese]<0);
+//        if(R[file_cheese][column_cheese]==0){ //new chees
+//            R[file_cheese][column_cheese] = 100;   
+//            //captured_chees++;
+//        }
+//    }while(R[file_cheese][column_cheese]<0);
     
-} 
+//} 
 //-------------------------------------------------------
 
 void init_R(void)

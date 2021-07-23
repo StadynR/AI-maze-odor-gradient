@@ -276,6 +276,19 @@ void random_agent(void){
     }while(R[i][j]<0); 
 } 
 //---------------------------------------------------------
+
+void random_cheese(void){
+    int i, j;
+    do{
+        i = random(files);
+        j = random(columns);
+        if(R[i][j]==0 || R[i][j]==100){ //if it is not in the wall or in the 
+            file_cheese=i;           
+            column_cheese=j;  
+        }
+    }while(R[i][j]<0); 
+} 
+//---------------------------------------------------------
 void Q_exploit(void)  
 {
     
