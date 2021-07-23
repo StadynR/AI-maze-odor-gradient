@@ -5,7 +5,7 @@ Group Project of Artificial Intelligence
 July 22 2021
 /*********************************************************************/ 
 //
-//  Students name:  Stadyn Rom�n, Samantha Quintachala, Arianna Armijos, Washington Pijal
+//  Students name:  Stadyn Román, Samantha Quintachala, Arianna Armijos, Washington Pijal
 //
 //------------------------------------------------------------------------------------------------
 // GLOBALS
@@ -20,6 +20,7 @@ char dummy[1];
 char key, color;
 
 int x_agent, y_agent;
+int x_cheese, y_cheese;
 
 int x_plot_maze=30;
 int y_plot_maze=30;
@@ -53,13 +54,11 @@ int grad_pointer;
 
 int path[files*columns*3][2];
 int visited[files*columns][2];
-int unvisited[4][2];
 int cont;
 int stcont;
 int mov;
-bool no_unvisited = false;
 
-int aux_x, aux_y;
+int file_cheese, column_cheese;
 int player_captured_color;
 
 //----------------------------------------)))
@@ -98,7 +97,7 @@ void grafico(void)
 
     ErrorCode = graphresult();            /* Read result of initialization*/
     if( ErrorCode != grOk )              /* Error occured during init    */
-    {
+    {-
        printf(" Graphics System Error: %s", grapherrormsg( ErrorCode ) );
        exit( 1 );
     }
@@ -154,7 +153,7 @@ void Start_Message(void){
   setcolor(GREEN);
   outtext("Maximize the window size ");
 
-  loadingBar();
+  //loadingBar();
 
   erase_screen();
 
@@ -163,12 +162,12 @@ void Start_Message(void){
   setcolor(WHITE);
   outtext(" Maze Gradient Program  ");
 
-} 
+}
 //-------------------------------------------------------------
 void loop(void)  //                                                           loop  !!                        &&&/&&/&&/////
 {
-
     plot_maze();
+    plot_olor_gradient();
     plot_agent();
     print_R();
     print_S();   //  gradiente de olor
@@ -180,6 +179,76 @@ void loop(void)  //                                                           lo
   
 }   
 //------------------------------------------------------
+void choose(void)
+{
+        //erase_screen();
+        
+    
+        moveto(40,420+100); 
+        settextstyle(4,0,4); 
+        setcolor(GREEN);
+        outtext(" Do you want to restart the environment? Press 'R' "); 
+        
+        moveto(20,470+100); 
+        settextstyle(4,0,4); 
+        setcolor(GREEN);
+        outtext(" Do you want change the cheese position? Press 'C' "); 
+        
+        moveto(50,520+100); 
+        settextstyle(4,0,4); 
+        setcolor(GREEN);
+        outtext(" Do you want change the maze? Press 'M' ");
+    
+        moveto(50,570+100); 
+        settextstyle(4,0,4); 
+        setcolor(GREEN);
+        outtext(" Do you want change the agent position? Press 'A' ");     
+        
+        do{
+            key=getch();
+            switch(key){
+                case 'R': case 'r':  //cambia todo el ambiente
+                {
+                    init_R();
+                    random_cheese();
+                    init_S();
+                    random_agent();
+                    plot_maze();
+                    plot_agent();
+                    plot_cheese();
+                } break;
+                case'C': case 'c':   // cambia solo el queso
+                {
+                    random_cheese();
+                    init_S();
+                    plot_maze();
+                    plot_agent();
+                    plot_cheese();
+                } break;
+                case'M': case 'm':    //cambia el maze
+                {
+                    init_R();
+                    init_S();
+                    plot_maze();
+                    plot_agent();
+                    plot_cheese();
+                    
+                } break;
+                case'A': case 'a':     //cambia el agente
+                {
+                    random_agent();
+                    plot_maze();
+                    plot_agent();
+                    plot_cheese();
+                } break;
+                case ' ':
+                {
+                    loop();
+                    random_agent();
+                }
+            }
+        }while(key!='x' && key!='X');
+}
 //===================================================================================================
 void main(void)
 { 
@@ -198,26 +267,35 @@ void main(void)
     //column_agent=0;             
 
     Start_Message();       // Messegae of welcome
-
+    
     init_R();                  //We get a random MAZE
+    random_cheese();
     init_S();
     random_agent();
 
-
     x_agent=x_plot_maze;   //  x_agent:  coordinate x of agent in the screen    
     y_agent=y_plot_maze;   //  y_agent:  coordinate y of agent in the screen  
+    
+    x_cheese=x_plot_maze;   //  x_cheese:  coordinate x of agent in the screen    
+    y_cheese=y_plot_maze;   //  y_cheese:  coordinate y of agent in the screen  
 
+    print_R();
+    print_S();   //  gradiente de olor
     plot_maze();
     plot_agent();
-
+    plot_cheese();
+    //plot_olor_gradient();
+    
     stop=0;
+    //loop();
+    choose();
 
     /*
     moveto(120,0);  // PRINT SCORE
     setcolor(WHITE);
     outtext("Score: ");
     outtextxy(175,0,gcvt(score,6,str)); 
-    loop();*/
+    loop();
 
     do {
        //play_flag=0; 
@@ -236,7 +314,7 @@ void main(void)
                                stop=stop^1;
                                loop();
                               }                                     
-           break; */
+           break; 
                               
             case 'R': case 'r':  {
                                    init_R();
@@ -250,7 +328,7 @@ void main(void)
             default:
                 loop();
          }
-   } while ((key!='x')&&(key!='X'));
+   } while ((key!='x')&&(key!='X'));*/
 
    closegraph();
    clrscr();
@@ -258,22 +336,22 @@ void main(void)
 
 //---------------------------------------
 /*
-BLACK        ³  0  ³ Yes ³ Yes
-BLUE         ³  1  ³ Yes ³ Yes
-GREEN        ³  2  ³ Yes ³ Yes
-CYAN         ³  3  ³ Yes ³ Yes
-RED          ³  4  ³ Yes ³ Yes
-MAGENTA      ³  5  ³ Yes ³ Yes
-BROWN        ³  6  ³ Yes ³ Yes
-LIGHTGRAY    ³  7  ³ Yes ³ Yes
-DARKGRAY     ³  8  ³ No  ³ Yes
-LIGHTBLUE    ³  9  ³ No  ³ Yes
-LIGHTGREEN   ³ 10  ³ No  ³ Yes
-LIGHTCYAN    ³ 11  ³ No  ³ Yes
-LIGHTRED     ³ 12  ³ No  ³ Yes
-LIGHTMAGENTA ³ 13  ³ No  ³ Yes
-YELLOW       ³ 14  ³ No  ³ Yes
-WHITE        ³ 15  ³ No  ³ Yes
+BLACK        Â³  0  Â³ Yes Â³ Yes
+BLUE         Â³  1  Â³ Yes Â³ Yes
+GREEN        Â³  2  Â³ Yes Â³ Yes
+CYAN         Â³  3  Â³ Yes Â³ Yes
+RED          Â³  4  Â³ Yes Â³ Yes
+MAGENTA      Â³  5  Â³ Yes Â³ Yes
+BROWN        Â³  6  Â³ Yes Â³ Yes
+LIGHTGRAY    Â³  7  Â³ Yes Â³ Yes
+DARKGRAY     Â³  8  Â³ No  Â³ Yes
+LIGHTBLUE    Â³  9  Â³ No  Â³ Yes
+LIGHTGREEN   Â³ 10  Â³ No  Â³ Yes
+LIGHTCYAN    Â³ 11  Â³ No  Â³ Yes
+LIGHTRED     Â³ 12  Â³ No  Â³ Yes
+LIGHTMAGENTA Â³ 13  Â³ No  Â³ Yes
+YELLOW       Â³ 14  Â³ No  Â³ Yes
+WHITE        Â³ 15  Â³ No  Â³ Yes
 
 ----------------------------------------------------------------
      if(x<0)    { x=0; if( heat<100) heat++;}     
