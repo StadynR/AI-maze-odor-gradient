@@ -24,7 +24,7 @@ scale=square_size;
           color=LIGHTGRAY; 
           if(temp<0) color=BLACK;          // WALL
           if(temp==0) color=LIGHTGRAY;          // FLOOR    
-          if(temp==100) color=YELLOW;     // TOP REWARD
+          //if(temp==100) color=YELLOW;     // TOP REWARD
           setcolor(color); 
           setfillstyle(SOLID_FILL,color); 
           bar(sx,sy,sx+scale,sy+scale) ;  
@@ -79,11 +79,8 @@ int offset_y=5;   //   para centrar al agente en y
 //----------------------------------------------------------------------------------------------------     
 void plot_cheese(void)
 {
-int color,cheese_size=square_size-3;  
+int color,cheese_size=square_size;  
 int x,y;    
-    
-int offset_x=5;   //   para centrar al agente en x
-int offset_y=5;   //   para centrar al agente en y
 
  x= x_plot_maze;   //   para sincronizarse con el enviroment grafico
  y= y_plot_maze;   //   
@@ -95,7 +92,7 @@ int offset_y=5;   //   para centrar al agente en y
  
  setcolor(YELLOW); //  
  setfillstyle(SOLID_FILL,RED);   
- bar(x_cheese+offset_x,y_cheese+offset_y,x_cheese+cheese_size,y_cheese+cheese_size) ;   
+ bar(x_cheese,y_cheese,x_cheese+cheese_size,y_cheese+cheese_size) ;   
     
 }
 
