@@ -175,7 +175,7 @@ void search_for_MAX_unvisited(void)
     if(file_agent==files-1 || already_visited(file_agent+1, column_agent)) sensor[3]=-1;
 
     //MAX=sensor[0];
-    //for(i=0;i<4;i++) if(sensor[i]>=MAX) {MAX=sensor[i];grad_pointer=i;}  // grad_pointer apunta al maximo valor
+    //for(i=0;i<4;i++) if(sensor[i]>=MAX) {MAX=sensor[i];grad_pointer=i;}  // grad_pointer apunta al maximo valor (no markov)
     
     if(no_unvisited()) MAX = -1;
     else{
@@ -184,8 +184,6 @@ void search_for_MAX_unvisited(void)
             sum+=sensor[i];
         }
         if(sum > 1) r = random(sum); else r = 0;
-        //cout << "suma: " << sum << " r: " << r << endl;
-        //getch();
         lim_l = 0;
         for(i=0;i<4;i++){ 
             if(sensor[i]!=-1){
@@ -246,12 +244,8 @@ void DFS(){
      path[stcont][1] = column_agent;
      visited[cont][0] = file_agent;
      visited[cont][1] = column_agent;    
-     //cout << "Stack pos: " << stcont << " , row: " << file_agent << " , col: " << column_agent << endl;
-     //print_visited();
     
      search_for_MAX_unvisited();
-     //cout << "max: " << MAX << " mov: " << grad_pointer << endl;
-     //getch();
      if (MAX == -1){
          stcont--;
          cont++;
@@ -260,7 +254,7 @@ void DFS(){
      else{
          cont++;
          stcont++;       
-         mov = grad_pointer;          // el agente se mueve a un nuevo estado
+         mov = grad_pointer;  // el agente se mueve a un nuevo estado
          }
 } 
 //-----------------------------------
