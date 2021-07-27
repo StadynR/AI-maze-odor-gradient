@@ -36,7 +36,7 @@ void print_S(void)
 //------------------------------------------------------------------------------------------------
 void init_S(void)
 {
- float lambda=10;    //  costante de decaimiento con la distancia
+ float lambda=100;    //  costante de decaimiento con la distancia --- ESTO SE MODIFICA PARA DISMINUIR EL GRADIENTE
  //float N=1.0;         //   N : scent concentration in a given square
  float step=0.01;     // cuanto se avanza en cada loop  
  int k, distx, disty;
