@@ -201,6 +201,51 @@ void search_for_MAX_unvisited(void)
     }
 }
 //------------------------------------------------------------
+void search_for_MAX(void) 
+{
+ int i,j, sum=0, r, lim_l, lim_r;
+    
+    sensor[0]= S[file_agent][column_agent-1];    // lee  a izquierda
+    if(column_agent==0) sensor[0]=-1;            // desborde a la izquierd  
+        
+    sensor[1]= S[file_agent][column_agent+1];    // lee a  derecha
+    if(column_agent==columns-1) sensor[1]=-1;
+    
+    sensor[2]= S[file_agent-1][column_agent];    // lee arriba
+    if(file_agent==0) sensor[2]=-1;
+    
+    sensor[3]= S[file_agent+1][column_agent];    // lee abjo
+    if(file_agent==files-1) sensor[3]=-1;
+        
+    
+    for(i=0;i<4;i++){
+        if(sensor[i] != -1)
+            sum+=sensor[i];
+    }
+    //cout << "suma: " << sum << endl;
+    //getch();
+    
+    if(sum > 1) r = random(sum); else r = 0;
+    //cout << "suma: " << sum << " r: " << r << endl;
+    //getch();
+    lim_l = 0;
+    for(i=0;i<4;i++){ 
+        if(sensor[i]!=-1){
+            lim_r = sensor[i] + lim_l;
+            if(r >= lim_l && r <= lim_r){
+                MAX=sensor[i];
+                grad_pointer = i;
+                break;
+            }
+            lim_l = lim_r;
+        }
+    }
+    
+    //MAX=sensor[0];
+    //for(i=0;i<4;i++) if(sensor[i]>=MAX) {MAX=sensor[i];grad_pointer=i;}  // grad_pointer apunta al maximo valor
+    //cout <<" MAX: "<< MAX <<endl; 
+}
+//------------------------------------------------------------
 void backtrack() 
 { 
     int temp;
@@ -249,7 +294,7 @@ void DFS(){
      //cout << "Stack pos: " << stcont << " , row: " << file_agent << " , col: " << column_agent << endl;
      //print_visited();
     
-     search_for_MAX_unvisited();
+     search_for_MAX();
      //cout << "max: " << MAX << " mov: " << grad_pointer << endl;
      //getch();
      if (MAX == -1){
@@ -305,7 +350,10 @@ void Q_exploit(void)
      do
       {
           
-       DFS();
+       //DFS();
+          
+       search_for_MAX();
+       mov = grad_pointer;
         
        plot_trail();              
        if(mov==0) move_left();
